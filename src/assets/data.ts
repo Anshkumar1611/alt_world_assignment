@@ -1,0 +1,19 @@
+const users=[
+    {
+        id:1,
+        profile:{
+            img_url:"",
+            name:"",
+            email:""
+        },
+        scores:{
+            behavioural:9,
+            communication:8,
+            situation_handling:6
+        },
+        about:"",
+        experience:"",
+        hobbies:"",
+        introduction:""
+    }
+]
