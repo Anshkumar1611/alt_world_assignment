@@ -4,6 +4,7 @@ import { users } from "@/assets/data";
 import { User } from "@/types/user";
 import Button from "../ui/button/Button";
 import calculatePercent from "@/utils/calculatePercent";
+import Score from "./Score";
 
 const CandidateDetails = ({ selectedUserID }: { selectedUserID: number }) => {
   const selectedUser = users.find((user) => user.id === selectedUserID) as User;
@@ -16,7 +17,6 @@ const CandidateDetails = ({ selectedUserID }: { selectedUserID: number }) => {
   const infos = [{ title: "about", desc: about }, { title: "experience", desc: experience }, { title: "introduction", desc: introduction }]
   return (
     <>
-      {/* {JSON.stringify(selectedUser)} */}
       <div className="flex gap-4 w-[68rem] p-4">
 
         <div className="flex flex-col gap-4 basis-1/2">
@@ -47,15 +47,15 @@ const CandidateDetails = ({ selectedUserID }: { selectedUserID: number }) => {
             </div>
             <section className="flex flex-col gap-4 grow">
               <div className="flex gap-4 justify-between  items-center">
-                <div className="grow h-2 rounded bg-gray"></div>
+                <Score percent={(behavioural / 10) * 100} />
                 <p className="basis-1/5">{behavioural}/10</p>
               </div>
               <div className="flex gap-4 justify-between  items-center">
-                <div className="grow h-2 rounded bg-gray"></div>
+                <Score percent={(communication / 10) * 100} />
                 <p className="basis-1/5">{communication}/10</p>
               </div>
               <div className="flex gap-4 justify-between items-center">
-                <div className="grow h-2 rounded bg-gray"></div>
+                <Score percent={(situation_handling / 10) * 100} />
                 <p className="basis-1/5">{situation_handling}/10</p>
               </div>
             </section>
