@@ -24,7 +24,7 @@ const Dashboard = () => {
           <p className="text-xs font-semibold text-gray p-3">CANDIDATE</p>
           <p className="text-xs font-semibold text-gray p-3">SCORE</p>
         </div>
-       <CandidatesTable setSelectedUserID={setSelectedUserID}/>
+       <CandidatesTable selectedUserID={selectedUserID} setSelectedUserID={setSelectedUserID}/>
       </div>
     </div>
     <div className="bg-white rounded-lg"><CandidateDetails selectedUserID={selectedUserID} /></div>
