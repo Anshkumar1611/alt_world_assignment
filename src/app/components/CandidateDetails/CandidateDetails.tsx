@@ -4,64 +4,38 @@ import { users } from "@/assets/data";
 import { User } from "@/types/user";
 import Button from "../ui/button/Button";
 import calculatePercent from "@/utils/calculatePercent";
-import Score from "./Score";
+import Profile from "./profile/Profile";
+import Percent from "./percent/Percent";
+import Performance from "./performance/Performance";
+import Questions from "./questions/Questions";
+import Hobbies from "./hobbies/Hobbies";
 
 const CandidateDetails = ({ selectedUserID }: { selectedUserID: number }) => {
   const selectedUser = users.find((user) => user.id === selectedUserID) as User;
-  const { profile: {
-    name, email
-  }, } = selectedUser;
+
+  // Destructuring of required data from selectedUser
+  const { profile: { name, email } } = selectedUser;
   const { about, experience, introduction, hobbies } = selectedUser;
   const { behavioural, communication, situation_handling } = selectedUser.scores;
+
+  // calculating percent
   const percent = calculatePercent(behavioural, communication, situation_handling)
+
+  // Infos Array
   const infos = [{ title: "about", desc: about }, { title: "experience", desc: experience }, { title: "introduction", desc: introduction }]
+
   return (
     <>
       <div className="flex gap-4 w-[68rem] p-4">
 
         <div className="flex flex-col gap-4 basis-1/2">
           <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2 p-2">
-              <div className="w-20 h-20 relative">
-                <Image
-                  src="/profile.jpg"
-                  fill
-                  alt="profile"
-                  className="rounded-xl object-cover"
-                />
-              </div>
-              <div>
-                <p className="font-bold">{name}</p>
-                <p className="text-gray text-sm">{email}</p>
-              </div>
-            </div>
-            <div className={`font-bold ${percent >= 50 ? "text-green" : percent >= 30 ? "text-golden" : "text-orange"} text-4xl`}>
-              {percent} %
-            </div>
+            <Profile name={name} email={email} />
+            <Percent percent={percent} />
           </div>
           <div className="flex flex-row gap-4 p-4">
-            <div className="flex flex-col gap-4 justify-center text-sm font-semibold text-gray">
-              <p className="">Behavioural</p>
-              <p className="">Communcation</p>
-              <p className="">Situation handling</p>
-            </div>
-            <section className="flex flex-col gap-4 grow">
-              <div className="flex gap-4 justify-between  items-center">
-                <Score percent={(behavioural / 10) * 100} />
-                <p className="basis-1/5">{behavioural}/10</p>
-              </div>
-              <div className="flex gap-4 justify-between  items-center">
-                <Score percent={(communication / 10) * 100} />
-                <p className="basis-1/5">{communication}/10</p>
-              </div>
-              <div className="flex gap-4 justify-between items-center">
-                <Score percent={(situation_handling / 10) * 100} />
-                <p className="basis-1/5">{situation_handling}/10</p>
-              </div>
-            </section>
+            <Performance behavioural={behavioural} communication={communication} situation_handling={situation_handling} />
           </div>
-
-
           <div>
             <div className="flex flex-col gap-8 p-4">
               {infos.map(info => (
@@ -71,26 +45,15 @@ const CandidateDetails = ({ selectedUserID }: { selectedUserID: number }) => {
                 </div>
               ))}
             </div>
-            <div className="py-8 px-4">
-              <h4 className="text-xl font-semibold capitalize">hobbies</h4>
-              {hobbies.map((hobby) => (<span key={hobby} className="text-gray text-sm pr-2">{hobby}</span>))}
-            </div>
+            <Hobbies hobbies={hobbies} />
           </div>
-
           <div className="w-full px-4">
             <Button className="text-white bg-secondary font-semibold w-full">SHORTLIST</Button>
           </div>
         </div>
         <div className="basis-1/2 relative rounded-lg overflow-hidden">
           <Image className="object-cover " fill src="/profile.jpg" alt="profile" />
-          <div className="p-4 bottom-0 items-center absolute flex flex-row justify-between w-full">
-            <div>←</div>
-            <div className="flex justify-center items-center flex-col">
-              <div className="font-bold text-sm">Tell me about yourself</div>
-              <div className="font-bold text-xs">Question 1 / 11</div>
-            </div>
-            <div>→</div>
-          </div>
+          <Questions />
         </div>
 
       </div >
